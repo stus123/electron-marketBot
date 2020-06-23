@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Login V2</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="./css/main.css" />
+</head>
+<body onload='setVal()'>
+	
+	
+	<div class="login">
+		<div class="login-triangle"></div>
+		
+		<h2 class="login-header">Log in</h2>
+	  
+		<form class="login-container">
+		  <p><input id="token" placeholder="vk_token"></p>
+		  <p><input id="group_id" placeholder="vk_group_id"></p>
+		 
+		</form>
+		<button onclick='login()' id=123 class='button button1'>Log in</button>
+		<script>
+     
+	 function setVal() {
+    const fs = require('fs')
+    const dir = fs.readdirSync('C:/')
+    if (dir.includes('marketBot') == false) {
+
+		fs.mkdirSync('C:/marketBot/')
+		
+        fs.writeFileSync('C:/marketBot/config.json', JSON.stringify({
+            vk_token: 'token',
+            group_id: 'group_id'
+		}, null, '\t'))
+		
+		return setVal();
+		
+    } else {
+		
+		const config = require('C:/marketBot/config.json')
+		
+        document.getElementById('token').value = config.vk_token
+
+        document.getElementById('group_id').value = config.group_id
+
+
+    }
+    return;
+}
+</script>
+
+<script>
+	
+	const {
+    VK
+} = require('vk-io');
+const fs = require('fs')
+const config = require('C:/marketBot/config.json')
+async function login() {
+
+        let token = document.getElementById('token').value
+
+		let group_id = document.getElementById('group_id').value
+		
+        let dir = fs.readdirSync('C:/marketBot/')
+
+
+
+        fs.writeFileSync('C:/marketBot/config.json', JSON.stringify({
+            vk_token: token,
+            group_id: group_id
+        }, null, '\t'))
+
+        const vk = new VK({
+            token: token
+        })
+
+        try {
+
+            await vk.api.groups.getSettings({
+				group_id: group_id
+				
+            })
+
+		window.location = './marketBot.html'
+		
+        } catch (e) {
+
+            window.location = "./index.html";
+		
+		}
+						}
+						
+</script>
+	  </div>
+</body>
+</html>

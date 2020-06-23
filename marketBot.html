@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>MarketBot</title>
+        <link rel="stylesheet" href="./css/util.css" />
+    </head>
+
+    <body onload='setVal()'>
+      <script> 
+const excelToJson = require('convert-excel-to-json');
+
+function setVal() {
+
+    const cfg = excelToJson({
+        sourceFile: './test.xlsx'
+    });
+
+    let arrlengh = cfg.Sheet1.length
+
+
+    document.getElementById('head').innerHTML = `<h2>Market bot<small>добавлено товаров 0/${arrlengh}</small></h2>`
+
+}
+      </script>
+        <div class="container">
+    
+       
+            <div id="head"></div>
+            <form>
+              
+              <div class="group">      
+                <input type="text" id=1 required >
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Категория товара</label>
+              </div>
+                
+              <div class="group">      
+                <input type="text" id=2 required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Страница в excel</label>
+              </div>
+              
+            </form>
+                
+            
+                <button class="button button1" id='mainfunc'>Начать</button>
+        
+           <script defer=true src='./renderer.js'></script>
+        </div>
+        
+    </body>
+
+</html>
